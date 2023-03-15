@@ -98,13 +98,13 @@ CREATE TABLE
         -- id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
         user_id INTEGER REFERENCES "user"(id) ON DELETE CASCADE,
         article_id INTEGER REFERENCES article(id)ON DELETE CASCADE,
-        CONSTRAINT unicity_like UNIQUE (user_id,article_id)
+        CONSTRAINT unicity_like UNIQUE (user_id,article_id) -- contrainte empêchant l'ajout d'un même article plusieurs fois en favoris par un utilisateur
     );
 
 -- ---------------------------------------------------------------------------------------
 
 -- table program
-
+-- table ds'association
 
 -- ---------------------------------------------------------------------------------------
 

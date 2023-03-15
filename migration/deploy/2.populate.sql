@@ -1,32 +1,32 @@
 BEGIN;
 
 INSERT INTO
-    "category"("name")
+    category("name")
 VALUES ('Exercices au bureau'),
     ('Bien être au bureau');
 -- ---------------------------------------------------------------------
 INSERT INTO
-    "label"("name")
+    label("name")
 VALUES ('salutations'),('étirement');
 -- ---------------------------------------------------------------------
 INSERT INTO
-    "role"("label")
+    role(label)
 VALUES ('coach'), ('member');
 -- ---------------------------------------------------------------------
 INSERT INTO
     "user"(
-        "firstname",
-        "lastname",
-        "email",
-        "birth_date",
-        "password",
-        "role_id"
+        firstname,
+        lastname,
+        email,
+        birth_date,
+        password,
+        role_id
     )
 VALUES ('Jon','Sérien','j.serien@idiot.com','1985/05/23','$2y$10$zDrsxe6uhYIybLJ1ka.aLOEcR7iDa8gF0r0Opatu.C9J1auQ8EEZ.',2),('Rocky','Balboa','r.balboa@tapefort.com','19450706','$2y$10$zDrsxe6uhYIybLJ1ka.aLOEcR7iDa8gF0r0Opatu.C9J1auQ8EEZ.',1);
 -- ---------------------------------------------------------------------
 INSERT INTO
-        "article"
-       ("title", "description","time","image","type","category_id","user_id")
+        article
+       (title, description,time,image,"type",category_id,user_id)
 VALUES ('Abdos au bureau','Soulève tes jambes en posant tes mains sur ta chaise ou sur ton bureau.','00:01:00','abdoaubureau.png','Activité',1,1),
     ('Étire tes jambes','En position debout, tu vas étirer une jambe après l''autre, N''hésite pas à t''aider de ton bureau pour faciliter l''étirement.','00:00:45','etirementbureau.png','Activité',1,1),
     ('Prend une pause','N''oublie pas de prendre de petites pauses dans la journée pour t''aérer, te déconnecter, et revenir en force sur tes tâches ! Tu seras beaucoup plus productif.','00:05:00','pause.jpg','Conseil',2,1),

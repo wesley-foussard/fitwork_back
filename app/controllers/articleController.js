@@ -1,6 +1,5 @@
 import articleMapper from "../DataMapper/articleMapper.js";
-import fs from 'fs';
-import path from 'path';
+
 export default{
     async getArticlesByCategory(req,res,next) {
         try{
