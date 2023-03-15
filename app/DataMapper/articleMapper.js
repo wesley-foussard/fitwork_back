@@ -61,7 +61,6 @@ export default{
         const sqlQuery = `INSERT INTO "article" 
                         ("title","description","time","image","type","category_id","user_id","created_at") 
                         VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING id,title, description, time, image, type, category_id, user_id;`;
-        console.log("body.image",body.image);
         const values=[body.title,
             body.description,
             body.time,
@@ -91,6 +90,7 @@ export default{
                         "category_id" = COALESCE($6, category_id),
                         "updated_at" = now()
                         WHERE id=$7::int RETURNING id,title,description,time,image,type,category_id,updated_at;`
+                        // COALESCE prends la première valeur non nulle entre le body et la valeur locale
         const values =[body.title,body.description,body.time,body.image,body.type,body.category_id,id];
         try{
             const response = await dbClient.query(sqlQuery,values);
