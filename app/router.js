@@ -11,6 +11,16 @@ import security from './service/security.js';
 
 const router = Router();
 /**
+ * POST /api/user/
+ * @summary crée un utilisateur
+ * @tags user
+ * @param {json} - json deconfiguration de l'utilisateur
+ * @return {user} 200 - un utilisateur
+ * @return {object} 500 - Unexpected error
+ */
+router.post('/user', userController.createUser);
+
+/**
  * GET /api/user/{id}
  * @summary Retourne un utilisateur
  * @tags user
@@ -31,6 +41,26 @@ router.get('/user/:id', userController.getUserById);
 router.patch('/user/:id', userController.updateUser);
 
 /**
+ * GET /user/{id}/favorite
+ * @summary liste les articles des favoris d'un utilisateur
+ * @tags user
+ * @return {json} 200 - fichier de retour
+ * @return {object} 500 - Unexpected error
+ */
+router.get('/user/:id/favorite', favoriteController.getUserFavorite);
+
+/**
+ * GET /user/{id}/articles
+ * @summary liste les articles rédigés par un utilisateur
+ * @tags user
+ * @return {json} 200 - fichier de retour
+ * @return {object} 500 - Unexpected error
+ */
+router.get('/user/:id/articles', userController.getAllArticles);
+
+
+
+/**
  * DELETE /api/user/{id}
  * @summary Supprime un utilisateur
  * @tags user
@@ -41,16 +71,6 @@ router.patch('/user/:id', userController.updateUser);
 router.delete('/user/:id', userController.deleteUser);
 
 /**
- * POST /api/user/
- * @summary crée un utilisateur
- * @tags user
- * @param {json} - json deconfiguration de l'utilisateur
- * @return {user} 200 - un utilisateur
- * @return {object} 500 - Unexpected error
- */
-router.post('/user', userController.createUser);
-
-/**
  * POST /api/login
  * @summary Connecte un utilisateur
  * @tags user
@@ -59,64 +79,8 @@ router.post('/user', userController.createUser);
  * @return {object} 500 - Unexpected error
  */
 router.post('/login', loginController.checkLogin);
-
-/**
- * POST /api/category/{id}
- * @summary récupère les articles d'une catégorie
- * @tags category
- * @param {number} id.path - id de la catégorie
- * @return {json} 200 - fichier de retour
- * @return {object} 500 - Unexpected error
- */
-router.get('/category/:id', articleController.getArticlesByCategory);
-
-router.get('/article/:id/image', imageController.getImage);
 router.get('/token', security.readToken);
 
-/**
- * POST /api/article/{id}
- * @summary Renvoie un article
- * @tags article
- * @param {number} id.path- id de l'article
- * @return {json} 200 - fichier de retour
- * @return {object} 500 - Unexpected error
- */
-router.get('/article/:id', articleController.getOneArticle);
-
-
-router.delete('/article/:id', articleController.deleteOneArticle);
-
-/**
- * POST /article/{id}
- * @summary modifie un article
- * @tags user
- * @param {json, number} id.path - fichier de paramètre de connection
- * @return {json} 200 - fichier de retour
- * @return {object} 500 - Unexpected error
- */
-router.patch('/article/:id', articleController.updateOneArticle)
-
-
-
-/**
- * POST /article
- * @summary Crée un article
- * @tags article
- * @param {json} - fichier de paramètre de connection
- * @return {json} 200 - fichier de retour
- * @return {object} 500 - Unexpected error
- */
-router.post('/article', articleController.addOneArticle);
-
-/**
- * GET /api/categories
- * @summary liste toutes les catégories 
- * @tags category
- * @param {json} - fichier de paramètre de connection
- * @return {json} 200 - fichier de retour
- * @return {object} 500 - Unexpected error
- */
-router.get('/categories', categoryController.getCategories);
 
 /**
  * GET /user/{id}/program
@@ -126,8 +90,7 @@ router.get('/categories', categoryController.getCategories);
  * @return {object} 500 - Unexpected error
  */
 
-router.get('/user/:id/program',/* security.checkToken,*/ programController.getUserProgram);
-
+router.get('/user/:id/program', programController.getUserProgram);
 
 /**
  * Post /article/{id}/program
@@ -147,20 +110,95 @@ router.post('/article/:id/program', programController.postArticleProgram);
  */
 router.delete('/program/:program_id', programController.deleteArticleProgram);
 
+/**
+ * DELETE /article/{id}/program
+ * @summary valide ou non un article du programme
+ * @tags program
+ * @return {json} 200 - fichier de retour
+ * @return {object} 500 - Unexpected error
+ */
 router.patch('/program/:id', programController.validateProgram);
+
+
+/**
+ * GET /api/categories
+ * @summary liste toutes les catégories 
+ * @tags category
+ * @param {json} - fichier de paramètre de connection
+ * @return {json} 200 - fichier de retour
+ * @return {object} 500 - Unexpected error
+ */
+router.get('/categories', categoryController.getCategories);
+
+
+/**
+ * POST /api/category/{id}
+ * @summary récupère les articles d'une catégorie
+ * @tags category
+ * @param {number} id.path - id de la catégorie
+ * @return {json} 200 - fichier de retour
+ * @return {object} 500 - Unexpected error
+ */
+router.get('/category/:id', articleController.getArticlesByCategory);
+
+/**
+ * POST /api/article/{id}
+ * @summary Renvoie un article
+ * @tags article
+ * @param {number} id.path- id de l'article
+ * @return {json} 200 - fichier de retour
+ * @return {object} 500 - Unexpected error
+ */
+router.get('/article/:id', articleController.getOneArticle);
+
+/**
+ * POST /api/article/{id}
+ * @summary Renvoie l'image associée à un article
+ * @tags article
+ * @param {number} id.path- id de l'article
+ * @return {json} 200 - fichier de retour
+ * @return {object} 500 - Unexpected error
+ */
+router.get('/article/:id/image', imageController.getImage);
+
+
+/**
+ * POST /article
+ * @summary Crée un article
+ * @tags article
+ * @param {json} - fichier de paramètre de connection
+ * @return {json} 200 - fichier de retour
+ * @return {object} 500 - Unexpected error
+ */
+router.post('/article', articleController.addOneArticle);
+
+/**
+ * POST /article/{id}
+ * @summary modifie un article
+ * @tags article
+ * @param {json, number} id.path - fichier de paramètre de connection
+ * @return {json} 200 - fichier de retour
+ * @return {object} 500 - Unexpected error
+ */
+router.patch('/article/:id', articleController.updateOneArticle)
+
+/**
+ * POST /article/{id}
+ * @summary supprime un article
+ * @tags article
+ * @param {json, number} id.path - fichier de paramètre de connection
+ * @return {json} 200 - fichier de retour
+ * @return {object} 500 - Unexpected error
+ */
+
+router.delete('/article/:id', articleController.deleteOneArticle);
+
+
 
 router.get('/labels', labelController.getAllLabels);
 
 router.get('/labels/:id/articles', labelController.getAllArticlesByLabels);
 
-/**
- * GET /user/{id}/favorite
- * @summary liste les articles des favoris d'un utilisateur
- * @tags program
- * @return {json} 200 - fichier de retour
- * @return {object} 500 - Unexpected error
- */
-router.get('/user/:id/favorite', favoriteController.getUserFavorite);
 
 /**
  * Post /article/{id}/favorite
@@ -181,7 +219,7 @@ router.post('/article/:id/favorite', favoriteController.postArticleFavorite);
 router.delete('/article/:id/favorite', favoriteController.deleteArticleFavorite);
 
 router.get('/articles', articleController.getAllArticles);
-router.get('/user/:id/articles', userController.getAllArticles);
+
 
 
 export default router;
