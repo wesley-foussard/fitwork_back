@@ -30,7 +30,7 @@ CREATE TABLE
         updated_at timestamptz
     );
 
--- ---------------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------- ----------
 
 -- table category
 
@@ -39,7 +39,7 @@ CREATE TABLE
 CREATE TABLE
     IF NOT EXISTS category(
         id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-        name TEXT NOT NULL
+        "name" TEXT NOT NULL
     );
 
 -- ---------------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ CREATE TABLE
 CREATE TABLE
     IF NOT EXISTS label(
         id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-        name TEXT NOT NULL
+        "name" TEXT NOT NULL
     );
 
 -- ---------------------------------------------------------------------------------------
@@ -90,6 +90,7 @@ CREATE TABLE
 -- ---------------------------------------------------------------------------------------
 
 -- table favorite
+-- table d'association
 
 -- ---------------------------------------------------------------------------------------
 
@@ -104,7 +105,7 @@ CREATE TABLE
 -- ---------------------------------------------------------------------------------------
 
 -- table program
--- table ds'association
+-- table d'association
 
 -- ---------------------------------------------------------------------------------------
 
